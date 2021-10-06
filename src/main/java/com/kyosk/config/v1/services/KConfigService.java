@@ -4,10 +4,14 @@ import com.kyosk.config.entities.KConfig;
 import com.kyosk.config.v1.repositories.KConfigRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @Service
+@Validated
 public class KConfigService {
 
     @Autowired
@@ -15,9 +19,10 @@ public class KConfigService {
 
     /**
      * Find All available configs
+     *
      * @return
      */
-    public List<KConfig> findAllConfigs(){
+    public List<KConfig> findAllConfigs() {
         return kConfigRepository.findAll();
     }
 
@@ -26,13 +31,14 @@ public class KConfigService {
      *
      * @param kConfig
      */
-    public void createConfig(KConfig kConfig) {
-        kConfigRepository.save(kConfig);
+    public KConfig createConfig(@Valid KConfig kConfig) {
+        return kConfigRepository.save(kConfig);
     }
 
 
     /**
      * Find Config By Name
+     *
      * @param name
      * @return
      * @throws Exception
@@ -50,19 +56,20 @@ public class KConfigService {
      * Update the Config
      *
      * @param name
-     * @param kConfig
+     * @param kConfigMetaData
      */
-    public void updateConfig(String name, KConfig kConfig) throws Exception {
+    public KConfig updateConfig(String name, Map kConfigMetaData) throws Exception {
         KConfig config = kConfigRepository.findByName(name).orElse(null);
         if (config == null) {
             throw new Exception("Config: " + name + " Doesn't exist");
         }
-        config = kConfig;
-        kConfigRepository.save(config);
+        config.setMetadata(kConfigMetaData);
+        return kConfigRepository.save(config);
     }
 
     /**
      * Delete the Config
+     *
      * @param name
      */
     public void deleteConfig(String name) throws Exception {
@@ -75,16 +82,13 @@ public class KConfigService {
 
     /**
      * Search using Dynamic Keys
+     *
      * @param field
      * @param value
      * @return
      */
-    public List<KConfig> searchConfigs(String field, Object value){
-        System.out.println(field);
-        System.out.println(value);
-        //        List<KConfig> result = template.find(new Query(Criteria.where("your_dynamic_field")
-        //                .is(value)), KConfig.class);
-        return kConfigRepository.complexSearchQuery(field,value);
+    public List<KConfig> searchConfigs(String field, Object value) {
+        return kConfigRepository.complexSearchQuery(field, value);
     }
 
 }

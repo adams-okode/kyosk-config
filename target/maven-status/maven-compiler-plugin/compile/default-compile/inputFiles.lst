@@ -1,6 +1,7 @@
 /Users/adamsokode/Desktop/projects/personal/kyosk/src/main/java/com/kyosk/config/entities/KConfig.java
 /Users/adamsokode/Desktop/projects/personal/kyosk/src/main/java/com/kyosk/config/v1/repositories/KConfigRepository.java
 /Users/adamsokode/Desktop/projects/personal/kyosk/src/main/java/com/kyosk/config/v1/services/KConfigService.java
+/Users/adamsokode/Desktop/projects/personal/kyosk/src/main/java/com/kyosk/config/configurations/MongoConfig.java
 /Users/adamsokode/Desktop/projects/personal/kyosk/src/main/java/com/kyosk/config/v1/controllers/KConfigController.java
 /Users/adamsokode/Desktop/projects/personal/kyosk/src/main/java/com/kyosk/config/ConfigApplication.java
 /Users/adamsokode/Desktop/projects/personal/kyosk/src/main/java/com/kyosk/config/v1/dtos/responses/GeneralResponse.java

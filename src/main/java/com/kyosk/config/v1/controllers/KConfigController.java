@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -42,8 +43,8 @@ public class KConfigController {
 
 
     @PutMapping(path = "/configs/{name}")
-    public ResponseEntity<GeneralResponse<Boolean>> updateConfig(@PathVariable String name, @RequestBody KConfig kConfig) {
-        kConfigService.createConfig(kConfig);
+    public ResponseEntity<GeneralResponse<Boolean>> updateConfig(@PathVariable String name, @RequestBody Map<String, Object> kConfigMetaData) throws Exception {
+        kConfigService.updateConfig(name, kConfigMetaData);
         GeneralResponse response = new GeneralResponse("Config Updated", HttpStatus.OK, true, LocalDateTime.now());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
