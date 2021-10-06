@@ -4,5 +4,11 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb://root:example@mongo:27017/admin
       database: kyosk_db
+      authentication-database: admin
+      host: ${DB_HOST}
+      password: example
+      username: root
+      port: 27017
+      repositories:
+        enabled: true
