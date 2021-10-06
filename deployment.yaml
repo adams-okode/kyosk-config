@@ -1,47 +1,44 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kyosk-deployment
-  namespace: default
+  creationTimestamp: null
   labels:
-    app: kyosk
+    app: demo
+  name: demo
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      app: kyosk
+      app: demo
+  strategy: {}
   template:
     metadata:
+      creationTimestamp: null
       labels:
-        app: kyosk
+        app: demo
     spec:
       containers:
-        - name: kyosk
-          image: gazgeek/springboot-helloworld
-          ports:
-            - containerPort: 8080
+      - image: springguides/demo
+        name: demo
+        resources: {}
+status: {}
 ---
 apiVersion: v1
 kind: Service
 metadata:
+  creationTimestamp: null
   labels:
-    app: kyosk
-  name: kyosk-service
-  namespace: default
+    app: demo
+  name: demo
 spec:
-  externalTrafficPolicy: Cluster
-  internalTrafficPolicy: Cluster
-  ipFamilies:
-    - IPv4
-  ipFamilyPolicy: SingleStack
   ports:
-    - nodePort: 32028
-      port: 8080
-      protocol: TCP
-      targetPort: 8080
+  - name: 8080-8080
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
   selector:
-    app: kyosk
-  sessionAffinity: None
-  type: LoadBalancer
+    app: demo
+  type: ClusterIP
 status:
   loadBalancer: {}
+
