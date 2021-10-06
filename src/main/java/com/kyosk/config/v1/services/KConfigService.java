@@ -80,6 +80,10 @@ public class KConfigService {
      * @return
      */
     public List<KConfig> searchConfigs(String field, Object value){
+        System.out.println(field);
+        System.out.println(value);
+        //        List<KConfig> result = template.find(new Query(Criteria.where("your_dynamic_field")
+        //                .is(value)), KConfig.class);
         return kConfigRepository.complexSearchQuery(field,value);
     }
 

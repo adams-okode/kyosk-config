@@ -17,10 +17,15 @@ spec:
     spec:
       containers:
         - name: kyosk
-          image: gazgeek/springboot-helloworld
+          image: adamsokode/kyosk-config:dev
           ports:
-            - containerPort: 8080
+            - containerPort: 8090
+          env:
+            - name: SERVE_PORT
+              value: "8090"
+
 ---
+# Service Configuration
 apiVersion: v1
 kind: Service
 metadata:
@@ -35,13 +40,31 @@ spec:
     - IPv4
   ipFamilyPolicy: SingleStack
   ports:
-    - nodePort: 32028
-      port: 8080
+    - port: 8080
       protocol: TCP
-      targetPort: 8080
   selector:
     app: kyosk
+    run: kyosk-deployment
   sessionAffinity: None
   type: LoadBalancer
 status:
-  loadBalancer: {}
+  loadBalancer: { }
+---
+# Ingress Configuration
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kyosk-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - http:
+        paths:
+          - path: "/kyosk-config"
+            pathType: Prefix
+            backend:
+              service:
+                name: kyosk-service
+                port:
+                  number: 80

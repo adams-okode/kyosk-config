@@ -5,3 +5,12 @@ spring:
   data:
     mongo:
       port: 0
+
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          mongodb:
+            repository:
+              query: debug

@@ -1,2 +1,6 @@
+com/kyosk/config/v1/repositories/KConfigRepository.class
 com/kyosk/config/ConfigApplication.class
 com/kyosk/config/entities/KConfig.class
+com/kyosk/config/v1/dtos/responses/GeneralResponse.class
+com/kyosk/config/v1/controllers/KConfigController.class
+com/kyosk/config/v1/services/KConfigService.class

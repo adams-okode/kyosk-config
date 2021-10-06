@@ -12,6 +12,6 @@ public interface KConfigRepository extends MongoRepository<KConfig, String> {
 
     Optional<KConfig> findByName(String name);
 
-    @Query(value = "{ '?0' : ?1 }")
+    @Query(value = "{ ?0 : ?1 }")
     List<KConfig> complexSearchQuery(String field, Object value);
 }

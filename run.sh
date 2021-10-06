@@ -1,6 +1,9 @@
-deploy_kubernertes_cluster_and_run() {
-  kubectl apply -f deployment.yaml
-  minikube service --url kyosk-service
+#!/bin/bash
+
+deploy_kubernetes_cluster_and_run() {
+  minikube addons enable ingress
+  kubectl apply -f arch.yaml
+  minikube service kyosk-service --url
 }
 
-deploy_kubernertes_cluster_and_run
+deploy_kubernetes_cluster_and_run

@@ -27,7 +27,7 @@ public class KConfigController {
 
 
     @PostMapping(path = "/configs")
-    public ResponseEntity<GeneralResponse<Boolean>> createConfig(@RequestBody KConfig<Object> kConfig) {
+    public ResponseEntity<GeneralResponse<Boolean>> createConfig(@RequestBody KConfig kConfig) {
         kConfigService.createConfig(kConfig);
         GeneralResponse response = new GeneralResponse("Config Created", HttpStatus.OK, true, LocalDateTime.now());
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -42,7 +42,7 @@ public class KConfigController {
 
 
     @PutMapping(path = "/configs/{name}")
-    public ResponseEntity<GeneralResponse<Boolean>> updateConfig(@PathVariable String name, @RequestBody KConfig<Object> kConfig) {
+    public ResponseEntity<GeneralResponse<Boolean>> updateConfig(@PathVariable String name, @RequestBody KConfig kConfig) {
         kConfigService.createConfig(kConfig);
         GeneralResponse response = new GeneralResponse("Config Updated", HttpStatus.OK, true, LocalDateTime.now());
         return new ResponseEntity<>(response, HttpStatus.OK);
