@@ -1,3 +1,7 @@
-
 server:
   port: ${SERVE_PORT}
+
+spring:
+  data:
+    mongo:
+      port: 0
