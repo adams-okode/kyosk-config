@@ -68,7 +68,6 @@ class KConfigServiceTest {
 
     @Test
     void findAllConfigs() {
-
         doReturn(dummyConfigurations).when(kConfigRepository).findAll();
         List<KConfig> testedConfig = kConfigService.findAllConfigs();
         Integer responseLength = testedConfig.size();
@@ -103,6 +102,10 @@ class KConfigServiceTest {
 
     @Test
     void updateConfig() throws Exception {
+        doReturn(Optional.of(masterTestkConfig)).when(kConfigRepository).findByName("datacenter-10");
+        doReturn(masterTestkConfig).when(kConfigRepository).save(masterTestkConfig);
+
+        KConfig savedConfig = kConfigService.updateConfig(masterTestkConfig.getName(), masterTestkConfig.getMetadata());
         assertEquals(assertThrows(Exception.class, () -> {
             kConfigService.updateConfig("datacenter-20", masterTestkConfig.getMetadata());
         }).getMessage(), "Config: datacenter-20 Doesn't exist");

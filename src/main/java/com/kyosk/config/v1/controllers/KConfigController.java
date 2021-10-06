@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -60,15 +59,23 @@ public class KConfigController {
 
     @GetMapping(path = "/search")
     public ResponseEntity<GeneralResponse<List<KConfig>>> searchConfigs(@RequestParam Map<String, Object> allRequestParams) throws Exception {
-        Optional<String> firstKey = allRequestParams.keySet().stream().findFirst();
-        if (firstKey.isEmpty()) {
-            throw new Exception("Please provide Valid Search Params");
-        }
-        String field = firstKey.get();
-        Object value = allRequestParams.get(field);
+        try {
+            System.out.println(allRequestParams.size());
+            if (allRequestParams.size() > 1) {
+                throw new Exception("Please provide Valid Search Params");
+            }
 
-        GeneralResponse response = new GeneralResponse("Config Deleted", HttpStatus.OK, kConfigService.searchConfigs(field, value), LocalDateTime.now());
-        return new ResponseEntity<>(response, HttpStatus.OK);
+            Optional<String> firstKey = allRequestParams.keySet().stream().findFirst();
+            String field = firstKey.get();
+            Object value = allRequestParams.get(field);
+
+            GeneralResponse response = new GeneralResponse("Ok", HttpStatus.OK, kConfigService.searchConfigs(field, value), LocalDateTime.now());
+            return new ResponseEntity<>(response, HttpStatus.OK);
+
+        } catch (Exception e) {
+            GeneralResponse response = new GeneralResponse("Bad Request", HttpStatus.BAD_REQUEST, null, LocalDateTime.now());
+            return new ResponseEntity<>(response, HttpStatus.BAD_GATEWAY);
+        }
     }
 
 

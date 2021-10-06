@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.util.LinkedMultiValueMap;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -111,8 +112,11 @@ class KConfigControllerTest {
     void searchConfigs() throws Exception {
         doReturn(List.of(masterTestkConfig)).when(kConfigService).searchConfigs("metadata.monitoring.enabled", "true");
         mockMvc.perform(get("/search")
-                .param("metadata.monitoring.enabled","true"))
+                .param("metadata.monitoring.enabled", "true"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.size()", greaterThan(0)));
+
+        mockMvc.perform(get("/search?meta=1&meta24=sd"))
+                .andExpect(status().is5xxServerError());
     }
 }
