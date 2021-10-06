@@ -3,14 +3,6 @@ server:
 
 spring:
   data:
-    mongo:
-      port: 0
-
-logging:
-  level:
-    org:
-      springframework:
-        data:
-          mongodb:
-            repository:
-              query: debug
+    mongodb:
+      uri: mongodb://root:example@mongo:27017/admin
+      database: kyosk_db

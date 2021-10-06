@@ -6,7 +6,7 @@ metadata:
   labels:
     app: kyosk
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: kyosk
@@ -23,32 +23,22 @@ spec:
           env:
             - name: SERVE_PORT
               value: "8090"
-
 ---
 # Service Configuration
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    app: kyosk
   name: kyosk-service
   namespace: default
 spec:
-  externalTrafficPolicy: Cluster
-  internalTrafficPolicy: Cluster
-  ipFamilies:
-    - IPv4
-  ipFamilyPolicy: SingleStack
+  type: NodePort
   ports:
-    - port: 8080
-      protocol: TCP
+      - port: 8090
+        targetPort: 8090
+        nodePort: 31349
   selector:
-    app: kyosk
-    run: kyosk-deployment
+    app: kyosk-deployment
   sessionAffinity: None
-  type: LoadBalancer
-status:
-  loadBalancer: { }
 ---
 # Ingress Configuration
 apiVersion: networking.k8s.io/v1
