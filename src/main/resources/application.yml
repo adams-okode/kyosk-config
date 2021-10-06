@@ -9,6 +9,6 @@ spring:
       host: ${DB_HOST}
       password: example
       username: root
-      port: 27017
+      port: ${DB_PORT:31350}
       repositories:
         enabled: true
