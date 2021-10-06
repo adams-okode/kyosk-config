@@ -14,5 +14,6 @@ services:
       - 8090:8090
     environment:
       - SERVE_PORT=8090
+      - DB_DSN="mongodb://root@example:kyosk-db-service:27017/admin"
 
 

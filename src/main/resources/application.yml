@@ -4,5 +4,5 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb://root:example@mongo:27017/admin
+      uri: ${DB_DSN}
       database: kyosk_db

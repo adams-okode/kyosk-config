@@ -18,11 +18,60 @@ spec:
       containers:
         - name: kyosk
           image: adamsokode/kyosk-config:dev
+          imagePullPolicy: Always
           ports:
             - containerPort: 8090
           env:
             - name: SERVE_PORT
               value: "8090"
+            - name: DB_DSN
+              value: "mongodb://root@example:kyosk-db-service:27017"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kyosk-mongo-deployment
+  namespace: default
+  labels:
+    app: kyosk
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kyosk
+  template:
+    metadata:
+      labels:
+        app: kyosk
+    spec:
+      containers:
+        - name: kyosk
+          image: mongo
+          ports:
+            - containerPort: 21017
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: root
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: example
+---
+# Service Configuration
+apiVersion: v1
+kind: Service
+metadata:
+  name: kyosk-db-service
+  namespace: default
+spec:
+  type: NodePort
+  ports:
+    - port: 8090
+      targetPort: 8090
+      nodePort: 31349
+    - port: 27017
+      targetPort: 27017
+  selector:
+    app: kyosk-deployment
+  sessionAffinity: None
 ---
 # Service Configuration
 apiVersion: v1
@@ -33,28 +82,9 @@ metadata:
 spec:
   type: NodePort
   ports:
-      - port: 8090
-        targetPort: 8090
-        nodePort: 31349
+    - port: 27017
+      targetPort: 27017
+      nodePort: 31350
   selector:
     app: kyosk-deployment
   sessionAffinity: None
----
-# Ingress Configuration
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: kyosk-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-spec:
-  rules:
-    - http:
-        paths:
-          - path: "/kyosk-config"
-            pathType: Prefix
-            backend:
-              service:
-                name: kyosk-service
-                port:
-                  number: 80
