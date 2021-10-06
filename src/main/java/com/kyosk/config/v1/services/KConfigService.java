@@ -73,7 +73,12 @@ public class KConfigService {
         kConfigRepository.delete(kConfig);
     }
 
-
+    /**
+     * Search using Dynamic Keys
+     * @param field
+     * @param value
+     * @return
+     */
     public List<KConfig> searchConfigs(String field, Object value){
         return kConfigRepository.complexSearchQuery(field,value);
     }

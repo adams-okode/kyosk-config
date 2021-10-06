@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Indexed;
 
 @Data
-@Document(collation = "configs")
+@Document(collection = "configs")
 public class KConfig<T> {
 
     @Id
