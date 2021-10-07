@@ -1,0 +1,4 @@
+com/kyosk/config/v1/repositories/KConfigRepositoryTest.class
+com/kyosk/config/v1/services/KConfigServiceTest.class
+com/kyosk/config/ConfigApplicationTests.class
+com/kyosk/config/v1/controllers/KConfigControllerTest.class
