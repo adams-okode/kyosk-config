@@ -5,10 +5,10 @@ spring:
   data:
     mongodb:
       database: kyosk_db
-      authentication-database: admin
+      authentication-database: ${AUTH_DB:admin}
       host: ${DB_HOST}
-      password: example
-      username: root
+      password: ${DB_PASS:password}
+      username: ${DB_USER:root}
       port: ${DB_PORT:31350}
       repositories:
         enabled: true
