@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.kyosk.config.ConfigApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.404 s - in com.kyosk.config.ConfigApplicationTests

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>KConfigService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">config</a> &gt; <a href="index.source.html" class="el_package">com.kyosk.config.v1.services</a> &gt; <span class="el_source">KConfigService.java</span></div><h1>KConfigService.java</h1><pre class="source lang-java linenums">package com.kyosk.config.v1.services;
+
+import com.kyosk.config.entities.KConfig;
+import com.kyosk.config.v1.repositories.KConfigRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.Valid;
+import java.util.List;
+import java.util.Map;
+
+@Service
+@Validated
+<span class="fc" id="L15">public class KConfigService {</span>
+
+    @Autowired
+    private KConfigRepository kConfigRepository;
+
+    /**
+     * Find All available configs
+     *
+     * @return
+     */
+    public List&lt;KConfig&gt; findAllConfigs() {
+<span class="fc" id="L26">        return kConfigRepository.findAll();</span>
+    }
+
+    /**
+     * Create the Config
+     *
+     * @param kConfig
+     */
+    public KConfig createConfig(@Valid KConfig kConfig) {
+<span class="fc" id="L35">        return kConfigRepository.save(kConfig);</span>
+    }
+
+
+    /**
+     * Find Config By Name
+     *
+     * @param name
+     * @return
+     * @throws Exception
+     */
+    public KConfig findConfig(String name) throws Exception {
+<span class="fc" id="L47">        KConfig kConfig = kConfigRepository.findByName(name).orElse(null);</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        if (kConfig == null) {</span>
+<span class="fc" id="L49">            throw new Exception(&quot;Config: &quot; + name + &quot; Doesn't exist&quot;);</span>
+        }
+<span class="fc" id="L51">        return kConfig;</span>
+    }
+
+
+    /**
+     * Update the Config
+     *
+     * @param name
+     * @param kConfigMetaData
+     */
+    public KConfig updateConfig(String name, Map kConfigMetaData) throws Exception {
+<span class="fc" id="L62">        KConfig config = kConfigRepository.findByName(name).orElse(null);</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        if (config == null) {</span>
+<span class="fc" id="L64">            throw new Exception(&quot;Config: &quot; + name + &quot; Doesn't exist&quot;);</span>
+        }
+<span class="fc" id="L66">        config.setMetadata(kConfigMetaData);</span>
+<span class="fc" id="L67">        return kConfigRepository.save(config);</span>
+    }
+
+    /**
+     * Delete the Config
+     *
+     * @param name
+     */
+    public void deleteConfig(String name) throws Exception {
+<span class="fc" id="L76">        KConfig kConfig = kConfigRepository.findByName(name).orElse(null);</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        if (kConfig == null) {</span>
+<span class="fc" id="L78">            throw new Exception(&quot;Config: &quot; + name + &quot; Doesn't exist&quot;);</span>
+        }
+<span class="fc" id="L80">        kConfigRepository.delete(kConfig);</span>
+<span class="fc" id="L81">    }</span>
+
+    /**
+     * Search using Dynamic Keys
+     *
+     * @param field
+     * @param value
+     * @return
+     */
+    public List&lt;KConfig&gt; searchConfigs(String field, Object value) {
+<span class="fc" id="L91">        return kConfigRepository.complexSearchQuery(field, value);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

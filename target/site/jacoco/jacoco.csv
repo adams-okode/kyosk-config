@@ -1,0 +1,7 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+config,com.kyosk.config.entities,KConfig,50,67,15,7,0,3,12,8,1,8
+config,com.kyosk.config.v1.dtos.responses,GeneralResponse,183,27,38,0,2,5,28,5,9,5
+config,com.kyosk.config.v1.controllers,KConfigController,0,155,0,2,0,25,0,8,0,7
+config,com.kyosk.config.v1.services,KConfigService,0,84,0,6,0,18,0,10,0,7
+config,com.kyosk.config.configurations,MongoConfig,0,13,0,0,0,3,0,3,0,3
+config,com.kyosk.config,ConfigApplication,5,3,0,0,2,1,1,1,1,1
