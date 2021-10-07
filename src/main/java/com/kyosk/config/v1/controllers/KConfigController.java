@@ -60,7 +60,7 @@ public class KConfigController {
     @GetMapping(path = "/search")
     public ResponseEntity<GeneralResponse<List<KConfig>>> searchConfigs(@RequestParam Map<String, Object> allRequestParams) throws Exception {
         try {
-            System.out.println(allRequestParams.size());
+            // System.out.println(allRequestParams.size());
             if (allRequestParams.size() > 1) {
                 throw new Exception("Please provide Valid Search Params");
             }
