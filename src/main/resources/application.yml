@@ -1,0 +1,14 @@
+server:
+  port: ${SERVE_PORT}
+
+spring:
+  data:
+    mongodb:
+      database: kyosk_db
+      authentication-database: ${AUTH_DB:admin}
+      host: ${DB_HOST}
+      password: ${DB_PASS:password}
+      username: ${DB_USER:root}
+      port: ${DB_PORT:31350}
+      repositories:
+        enabled: true

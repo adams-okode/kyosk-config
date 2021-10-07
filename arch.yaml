@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kyosk-deployment
+  namespace: default
+  labels:
+    app: kyosk
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kyosk
+  template:
+    metadata:
+      labels:
+        app: kyosk
+    spec:
+      containers:
+        - name: kyosk
+          image: adamsokode/kyosk-config:dev
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8094
+          env:
+            - name: SERVE_PORT
+              value: "8094"
+            - name: DB_HOST
+              value: "kyosk-mongodb-standalone-0.kyosk-mongodb-standalone-database"
+            - name: DB_PORT
+              value: "27017"
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kyosk-mongodb-standalone
+spec:
+  serviceName: kyosk-mongodb-standalone-database
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kyosk-mongodb-standalone-database
+  template:
+    metadata:
+      labels:
+        app: kyosk-mongodb-standalone-database
+        selector: kyosk-mongodb-standalone
+    spec:
+      containers:
+        - name: mongodb-standalone
+          image: mongo:4.0.8
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: "root"
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: "example"
+      nodeSelector:
+        kubernetes.io/hostname: minikube
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kyosk-mongodb-standalone-database
+  labels:
+    app: kyosk-mongodb-standalone-database
+spec:
+  clusterIP: None
+  selector:
+    app: kyosk-mongodb-standalone-database
+---
+# Service Configuration
+apiVersion: v1
+kind: Service
+metadata:
+  name: kyosk-deployment-service
+  namespace: default
+spec:
+  type: ClusterIP
+  selector:
+    app: kyosk
+  ports:
+    - protocol: TCP
+      port: 8094
+      targetPort: 8094

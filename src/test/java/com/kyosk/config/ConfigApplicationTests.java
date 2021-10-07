@@ -8,6 +8,7 @@ class ConfigApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }
